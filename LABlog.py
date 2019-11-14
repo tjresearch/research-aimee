@@ -11,7 +11,7 @@ from skimage.util import img_as_float
 from skimage import io
 import matplotlib.pyplot as plt
 
-
+#test edit
 
 def logistic(L):
     return 255/(1+math.exp(-0.05*(L-127.5)))
