@@ -31,3 +31,9 @@ Run detectCVLib.py with the command:
 This will output an image specified in the code with all the objects identified in it.
 
 ## Sample Output
+
+![](/images/004.jpg)
+
+![](/images/Shadow004.jpg)
+
+![](/images/Kmeans004.jpg)
