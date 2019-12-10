@@ -66,7 +66,7 @@ for r in range(img.shape[0]):
             maxShade = shadValL
         if shadValL < minShade:
             minShade = shadValL
-        if imgL.item(r,c) < 110 and imgB.item(r,c) < 160 and imgA.item(r,c) < 150:
+        if imgL.item(r,c) < 105 and imgB.item(r,c) < 160 and imgA.item(r,c) < 150:
             if shadValL > .5 and shadValL < 30:
                 shadPix.add((r,c))
                 img[r][c] = (0,0,0)
@@ -99,6 +99,11 @@ for r in range(img.shape[0]):
             img[r][c] = (255,255,255)
 
 img = cv.resize(img, (600, 600))
+
+num = input("output name: ")
+
+cv.imwrite('../../images/outputs/'+num, img)
+
 cv.imshow("shadow?", img)
 
 # show the plots
