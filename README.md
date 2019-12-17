@@ -15,7 +15,7 @@ Numpy
 CVLib
 
 ## Installation Instructions
-Download LABLog.py, the 'images' folder for test images, and detectCVLib.py from Object_detection into the same directory. This is the current most up-to-date set of files. 
+Download LABLog.py, the 'images' folder for test images, and gaborFilter.py from Object_detection into the same directory. This is the current most up-to-date set of files. 
 
 ## Run Instructions
 Run LABLog.py first with the command: 
@@ -26,9 +26,9 @@ This will output the orginial image in black and white with shadow pixels marked
 
 Run detectCVLib.py with the command:
 
-    python3.7 detectCVLib.py
+    python3.7 gaborFilter.py --image ./images/[image_name]
 
-This will output an image specified in the code with all the objects identified in it.
+This will output an image specified in the code with the texture and object boundaries labeled in white.
 
 ## Sample Output
 
