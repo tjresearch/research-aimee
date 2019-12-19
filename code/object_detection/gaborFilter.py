@@ -12,12 +12,12 @@ args = vars(ap.parse_args())
 
 image = cv.imread(args["image"])
 
-def build_filters():
+def build_filters(theta):
     filters = []
     ksize = 31
     for theta in np.arange(0, np.pi, np.pi / 30):
         #cv2.getGaborKernel(ksize, sigma, theta, lambda, gamma, psi, ktype)
-        kern = cv.getGaborKernel((ksize, ksize), 5.0, 0, 9.0, 0.5, 0, ktype=cv.CV_32F)
+        kern = cv.getGaborKernel((ksize, ksize), 4.0, theta, 9.3, 1.0, 50, ktype=cv.CV_32F)
         kern /= 1.5*kern.sum()
         filters.append(kern)
         return filters
@@ -29,9 +29,29 @@ def process(img, filters):
         np.maximum(accum, fimg, accum)
     return accum
 
-filters = build_filters()
+filters = build_filters(0)
 
 res1 = process(image, filters)
+#res2 = res1
+
+cv.imshow("res1", res1)
+
+edges = cv.Canny(image, 260, 300)
+cv.imshow("canny", edges)
+
+print(res1.shape)
+for r in range(res1.shape[0]):
+    for c in range(res1.shape[1]):
+        tot = int(res1[r][c][0]) + int(res1[r][c][1]) + int(res1[r][c][2])
+        '''if res1[r][c][0] == 255 and res1[r][c][1] == 255 and res1[r][c][2] == 255:
+            res1[r][c] = (0,0,0)
+        else:
+            res1[r][c] = (255,255,255)'''
+        if tot > 255*3-100:
+            res1[r][c] = (0,0,0)
+        else:
+            res1[r][c] = (255, 255, 255)
+
 cv.imshow("result", res1)
 cv.waitKey(0)
 cv.destroyAllWindows()
