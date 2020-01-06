@@ -12,15 +12,22 @@ from skimage import io
 import matplotlib.pyplot as plt
 import numpy as np
 
-def build_filters(theta):
+def build_filters(angle):
     filters = []
     ksize = 31
-    for theta in np.arange(0, np.pi, np.pi / 30):
+    '''
+    for theta in np.arange(0, np.pi, np.pi / 60):
         #cv2.getGaborKernel(ksize, sigma, theta, lambda, gamma, psi, ktype)
-        kern = cv.getGaborKernel((ksize, ksize), 4.0, theta, 9.3, 1.0, 50, ktype=cv.CV_32F)
+        kern = cv.getGaborKernel((ksize, ksize), 4.0, theta, 9.3, 1.0, 65, ktype=cv.CV_32F)
         kern /= 1.5*kern.sum()
         filters.append(kern)
         return filters
+        
+    '''
+    kern = cv.getGaborKernel((ksize, ksize), 4.0, angle, 9.3, 1.0, 65, ktype=cv.CV_32F)
+    kern /= 1.5*kern.sum()
+    filters.append(kern)
+    return filters
 
 def process(img, filters):
     accum = np.zeros_like(img)
@@ -42,6 +49,8 @@ args = vars(ap.parse_args())
 img = cv.imread(args["image"])
 image = cv.imread(args["image"])
 #img = cv.resize(img, (int(img.shape[1]/2), int(img.shape[0]/2)))
+
+cv.imshow("original image", image)
 
 
 # load the image and convert it to a floating point data type
@@ -120,22 +129,22 @@ for r in range(img.shape[0]):
 cv.imshow("shadow?", img)
 
 
-filters = build_filters(0)
+filters = build_filters(90)
+filters2 = build_filters(0)
 
 res1 = process(image, filters)
+res2 = process(image, filters2)
 #res2 = res1
 
 cv.imshow("res1", res1)
+cv.imshow("res2", res2)
 
 print(res1.shape)
 for r in range(res1.shape[0]):
     for c in range(res1.shape[1]):
         tot = int(res1[r][c][0]) + int(res1[r][c][1]) + int(res1[r][c][2])
-        '''if res1[r][c][0] == 255 and res1[r][c][1] == 255 and res1[r][c][2] == 255:
-            res1[r][c] = (0,0,0)
-        else:
-            res1[r][c] = (255,255,255)'''
-        if tot > 255*3-100:
+        tot2 = int(res2[r][c][0]) + int(res2[r][c][1]) + int(res2[r][c][2])
+        if tot > 255*3-100 or tot2 > 255*3-100:
             img[r][c] = (0,0,255)
         #else:
         #    img[r][c] = (255, 255, 255)
