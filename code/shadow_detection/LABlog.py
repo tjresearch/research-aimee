@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 #test edit
 
 def logistic(L):
-    return 255/(1+math.exp(-0.05*(L-127.5)))
+    return 255/(1+math.exp(-0.04*(L-120.5)))
 
 
 numSegments = 600
@@ -85,9 +85,9 @@ while not len(imgSegs[counter]) == 0:
     for thing in range(len(imgSegs[counter])):
         if imgSegs[counter][thing] in shadPix:
             pixcounter += 1
-    if pixcounter > .55 * len(imgSegs[counter]):
+    if pixcounter > .5 * len(imgSegs[counter]):
         black.add(counter)
-    elif pixcounter < .25 * len(imgSegs[counter]):
+    elif pixcounter < .3 * len(imgSegs[counter]):
         white.add(counter)
     counter += 1
 
@@ -98,11 +98,11 @@ for r in range(img.shape[0]):
         elif segments.item(r,c) in white:
             img[r][c] = (255,255,255)
 
-img = cv.resize(img, (600, 600))
+#img = cv.resize(img, (600, 600))
 
 num = input("output name: ")
 
-cv.imwrite('../../images/outputs/'+num, img)
+#cv.imwrite('../../images/outputs/'+num, img)
 
 cv.imshow("shadow?", img)
 
