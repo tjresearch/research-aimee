@@ -3,6 +3,7 @@ sys.path.append("/usr/local/lib/python3.7/site-packages")
 
 import cv2 as cv
 import argparse, math
+import numpy as np
 
 # import the necessary packages
 from skimage.segmentation import slic
@@ -30,9 +31,6 @@ segments = slic(image, n_segments=numSegments, sigma=5)
 
 print(segments)
 
-imgLAB = cv.cvtColor(img, cv.COLOR_BGR2LAB)
-imgL, imgA, imgB = cv.split(imgLAB)
-
 min = 10000
 max = 0
 
@@ -51,9 +49,53 @@ ax = fig.add_subplot(1, 1, 1)
 ax.imshow(mark_boundaries(image, segments))
 plt.axis("off")
 
+imgLAB = cv.cvtColor(img, cv.COLOR_BGR2LAB)
+imgL, imgA, imgB = cv.split(imgLAB)
+
+totalL = 0
+totalA = 0
+totalB = 0
 for r in range(img.shape[0]):
     for c in range(img.shape[1]):
-        if imgL.item(r,c) < 100 and imgB.item(r,c) < 135 and imgA.item(r,c) < 135:
+        totalL += imgL.item(r,c)
+        totalA += imgA.item(r,c)
+        totalB += imgB.item(r,c)
+
+totalPix = img.shape[0] * img.shape[1]
+print("Averages: ", totalL/totalPix, totalA/totalPix, totalB/totalPix)
+
+if totalL/totalPix > 175:
+    alpha = 1.7
+    beta = -175
+
+    new_image = np.zeros(img.shape, img.dtype)
+    for y in range(img.shape[0]):
+        for x in range(img.shape[1]):
+            for c in range(img.shape[2]):
+                new_image[y,x,c] = np.clip(alpha*img[y,x,c] + beta, 0, 255)
+
+    img = new_image
+
+if totalL/totalPix < 75:
+    alpha = 2.5
+    beta = 0
+
+    new_image = np.zeros(img.shape, img.dtype)
+    for y in range(img.shape[0]):
+        for x in range(img.shape[1]):
+            for c in range(img.shape[2]):
+                new_image[y, x, c] = np.clip(alpha * img[y, x, c] + beta, 0, 255)
+
+    img = new_image
+
+imgLAB = cv.cvtColor(img, cv.COLOR_BGR2LAB)
+imgL, imgA, imgB = cv.split(imgLAB)
+
+cv.imshow("contrast", img)
+
+for r in range(img.shape[0]):
+    for c in range(img.shape[1]):
+        if imgL.item(r,c) < 110 and imgB.item(r,c) < 135 and imgA.item(r,c) < 135:
             #img[r][c] = (0,0,0)
             shadPix.add((r,c))
         #else:
@@ -78,6 +120,9 @@ for r in range(img.shape[0]):
         else:
             img[r][c] = (255,255,255)
 
+num = input("output name: ")
+
+cv.imwrite('../../images/outputs/'+num, img)
 
 cv.imshow("shadow?", img)
 

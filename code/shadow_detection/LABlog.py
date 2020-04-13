@@ -102,7 +102,7 @@ for r in range(img.shape[0]):
 
 num = input("output name: ")
 
-#cv.imwrite('../../images/outputs/'+num, img)
+cv.imwrite('../../images/outputs/'+num, img)
 
 cv.imshow("shadow?", img)
 
