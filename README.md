@@ -40,7 +40,7 @@ Run objectFeature.py with the command:
     
     python3.7 objectFeature.py --image ../images/[image_name]
     
-This will output an image with the shadow and outline of the object, along with critical points identified in each region.
+This will output an image with the shadow and outline of the object, along with critical points identified in each region. Points found on the object are in red, and points in the shadow region are labeled in blue.
 
 ## Sample Output
 
