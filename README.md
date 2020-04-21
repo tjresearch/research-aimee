@@ -20,15 +20,27 @@ Download LABLog.py, the 'images' folder for test images, and gaborFilter.py from
 ## Run Instructions
 Run LABLog.py first with the command: 
 
-    python3.7 LABLog.py --image ./images/[image_name]
+    python3.7 LABLog.py --image ../images/[image_name]
 
 This will output the orginial image in black and white with shadow pixels marked in black. It will also output the original image segemented with k-means.
 
 Run detectCVLib.py with the command:
 
-    python3.7 gaborFilter.py --image ./images/[image_name]
+    python3.7 gaborFilter.py --image ../images/[image_name]
 
 This will output an image specified in the code with the texture and object boundaries labeled in white.
+
+Run harrisCorner.py with the command:
+
+    python3.7 harrisCorner.py --image ../../images/[image_name]
+    
+This will output an image with all 'critical' points identified in red.
+
+Run objectFeature.py with the command:
+    
+    python3.7 objectFeature.py --image ../images/[image_name]
+    
+This will output an image with the shadow and outline of the object, along with critical points identified in each region.
 
 ## Sample Output
 
@@ -37,3 +49,6 @@ This will output an image specified in the code with the texture and object boun
 ![](/images/Shadow004.jpg)
 
 ![](/images/Kmeans004.jpg)
+
+![](/images/outputs/DST)
+
