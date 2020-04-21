@@ -50,5 +50,5 @@ This will output an image with the shadow and outline of the object, along with 
 
 ![](/images/Kmeans004.jpg)
 
-![](/images/outputs/DST)
+![](/images/outputs/DST.png)
 
