@@ -46,13 +46,13 @@ This will output an image with the shadow and outline of the object, along with 
 
 ![](/images/001.jpg)
 
-![](/images/outputs/kmeans001.jpg)
+![](/images/outputs/kmeans001.png)
 
 ![](/images/outputs/001.jpg)
 
-![](/images/outputs/gabor001.jpg)
+![](/images/outputs/gabor001.png)
 
-![](/images/outputs/harris001.jpg)
+![](/images/outputs/harris001.png)
 
 ![](/images/outputs/DST.png)
 
