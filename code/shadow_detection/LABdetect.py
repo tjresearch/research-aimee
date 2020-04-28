@@ -19,11 +19,12 @@ ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 img = cv.imread(args["image"])
+img = cv.resize(img, (int(img.shape[1]/2), int(img.shape[0]/2)))
 #img = cv.resize(img, (int(img.shape[1]/2), int(img.shape[0]/2)))
 
 
 # load the image and convert it to a floating point data type
-image = img_as_float(io.imread(args["image"]))
+image = img_as_float(img)
 
 # apply SLIC and extract (approximately) the supplied number
 # of segments

@@ -49,16 +49,23 @@ ap.add_argument("-i", "--image", required=True, help="Path to the image")
 args = vars(ap.parse_args())
 
 image = cv.imread(args["image"])
-src = cv.medianBlur(image, 3)
+src = image
+#src = cv.medianBlur(image, 3)
 
 img = cv.imread(args["image"])
-#img = cv.resize(img, (int(img.shape[1]/2), int(img.shape[0]/2)))
+
+
+
+if image.shape[1] > 600 or image.shape[0] > 600:
+    image = cv.resize(image, (int(image.shape[1] / 2), int(image.shape[0] / 2)))
+    img = cv.resize(img, (int(img.shape[1] / 2), int(img.shape[0] / 2)))
+    src = image
 
 
 # load the image and convert it to a floating point data type
-shadowImage = img_as_float(io.imread(args["image"]))
+#shadowImage = img_as_float(io.imread(args["image"]))
+shadowImage = img_as_float(image)
 segments = slic(shadowImage, n_segments=numSegments, sigma=5)
-
 
 def build_filters(angle):
     filters = []
